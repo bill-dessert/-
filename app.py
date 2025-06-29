@@ -11,11 +11,11 @@ calorie_table = {
     "希臘優格": 0.59,
     "無糖優格": 0.43,
     "鮮奶油": 3.52,
-    "吉利丁片": 3.0,
+    "吉利丁片": 3.00,
     "泡打粉": 1.43,
     "核桃": 6.54,
     "燕麥": 3.89,
-    "奶粉": 5.0,
+    "奶粉": 5.00,
     "糖粉": 3.87,
     "黑巧克力": 5.5,
     "紅茶粉": 2.4,
@@ -26,38 +26,49 @@ calorie_table = {
     "香蕉": 0.89,
 }
 
-# 預設值
+# 預設頁面設定
 st.set_page_config(page_title="甜點熱量計算器", page_icon="🍰")
 
+# 黑色主題美化
 st.markdown("""
     <style>
         .stApp {
-            background-color: #fef6eb;
-            color: #333333;
-            font-size: 16px;
+            background-color: #1e1e1e;
+            color: #f5f5f5;
         }
         .stNumberInput input {
-            background-color: white;
-            color: black;
+            background-color: #333333;
+            color: white;
+        }
+        .stSelectbox div {
+            background-color: #333333;
+            color: white;
+        }
+        .css-1cpxqw2, .css-1offfwp {
+            color: white;
+        }
+        .stButton > button {
+            background-color: #444;
+            color: white;
         }
     </style>
 """, unsafe_allow_html=True)
 
 st.title("🍰 甜點熱量計算器")
-st.write("輸入各項食材的克數，幫你計算總熱量！")
+st.write("輸入食材的克數，幫你計算出甜點總熱量！")
 
 # 初始欄位數量
 max_fields = 15
 default_fields = 5
 num_fields = st.session_state.get("num_fields", default_fields)
 
-# + 按鈕
+# 加一格食材欄位
 if num_fields < max_fields:
     if st.button("➕ 新增一格食材欄位"):
         num_fields += 1
         st.session_state["num_fields"] = num_fields
 
-# 顯示欄位
+# 顯示食材輸入欄位
 total_calories = 0
 for i in range(num_fields):
     cols = st.columns([2, 1])
@@ -66,7 +77,7 @@ for i in range(num_fields):
     if ingredient:
         total_calories += calorie_table[ingredient] * weight
 
-# 結果
+# 顯示總熱量
 st.markdown("---")
 st.subheader(f"🍩 總熱量： 約 **{total_calories:.0f} kcal**")
 st.caption("小比利出品🍰")
