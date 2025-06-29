@@ -83,8 +83,5 @@ st.subheader("📋 熱量明細")
 for item in details:
     st.markdown(f"- {item}")
 
-
-# 顯示總熱量
-st.markdown("---")
-st.subheader(f"🍩 總熱量： 約 **{total_calories:.0f} kcal**")
+st.subheader(f"🍩 總熱量：約 **{total_calories:.1f} kcal**")
 st.caption("小比利出品🍰")
