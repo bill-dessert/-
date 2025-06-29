@@ -1,77 +1,68 @@
 import streamlit as st
 
-# 初始化欄位數
-if "num_rows" not in st.session_state:
-    st.session_state.num_rows = 5
-
-# 食材熱量表（kcal/克）
+# 🍰 甜點熱量資料庫 (每克 kcal)
 calorie_table = {
-    "全脂鮮奶": 0.64,
-    "鮮奶油": 3.52,
-    "奶油乳酪": 3.5,
-    "希臘優格": 0.59,
-    "無糖優格": 0.55,
-    "雞蛋": 1.43,
-    "低筋麵粉": 3.48,
-    "中筋麵粉": 3.64,
+    "低筋麵粉": 3.64,
     "高筋麵粉": 3.52,
-    "燕麥": 3.79,
     "糖粉": 3.87,
-    "核桃": 6.54,
-    "吉利丁片": 3.40,
-    "抹茶粉": 3.00,
+    "奶油": 7.17,
+    "奶油乳酪": 3.52,
+    "希臘優格": 0.59,
+    "無糖優格": 0.45,
+    "吉利丁片": 3.4,
+    "抹茶粉": 3.18,
+    "鮮奶油": 3.44,
     "嫩豆腐": 0.66,
-    "奶粉": 4.95,
-    "杏仁粉": 5.75,
-    "可可粉": 2.84,
-    "蜂蜜": 3.04,
-    "黑糖": 3.80
+    "燕麥": 3.89,
+    "核桃": 6.52,
+    "泡打粉": 0.53,
+    "奶粉": 5.00,
+    "可可粉": 2.28,
+    "牛奶": 0.64,
+    "砂糖": 3.87,
+    "黑糖": 3.54,
+    "蜂蜜": 3.04
 }
 
-# 🍰 美化介面（牛奶色調）
+# 🍼 背景樣式：牛奶感！
 st.markdown(
     """
     <style>
     .stApp {
         background-color: #fffdf7;
-        font-family: '微軟正黑體', sans-serif;
-    }
-    h1 {
-        color: #ff6f61;
-        font-size: 36px;
+        font-family: "Segoe UI", sans-serif;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-# 🚀 主標題
-st.markdown("<h1>🍰 小比利甜點熱量計算器</h1>", unsafe_allow_html=True)
-st.caption("輸入食材與重量，計算總熱量～")
+# 🧁 標題
+st.title("🍰 甜點熱量計算器")
+st.caption("輸入每項食材的克數，即可計算出總熱量！")
+
+# ➕ 初始化欄位數
+if "count" not in st.session_state:
+    st.session_state.count = 5  # 預設 5 格
 
 # ➕ 新增欄位按鈕
-if st.button("➕ 新增食材欄位"):
-    if st.session_state.num_rows < 15:
-        st.session_state.num_rows += 1
-    else:
-        st.warning("最多只能輸入 15 項食材喔！")
+if st.session_state.count < 15:
+    if st.button("➕ 新增一個食材欄位"):
+        st.session_state.count += 1
 
-# 輸入區
-total_calories = 0.0
-for i in range(st.session_state.num_rows):
-    cols = st.columns([2, 1])
-    with cols[0]:
-        ingredient = st.selectbox(f"食材 {i+1}", list(calorie_table.keys()), key=f"ingredient_{i}")
-    with cols[1]:
-        weight = st.number_input(f"克數 {i+1}", min_value=0.0, step=1.0, key=f"weight_{i}")
-    total_calories += calorie_table[ingredient] * weight
+# 📝 輸入欄位
+total_calories = 0
+for i in range(st.session_state.count):
+    col1, col2 = st.columns([2, 1])
+    with col1:
+        ingredient = st.selectbox(f"食材 {i+1}", ["--請選擇--"] + list(calorie_table.keys()), key=f"ing_{i}")
+    with col2:
+        weight = st.number_input(f"克數 {i+1}", min_value=0.0, key=f"wt_{i}")
 
-# 🍮 顯示總熱量結果
+    if ingredient and ingredient != "--請選擇--":
+        total_calories += calorie_table[ingredient] * weight
+
+# 💡 顯示結果
 st.markdown("---")
-st.markdown(
-    f"<h2>🍓 總熱量：{total_calories:.2f} kcal</h2>",
-    unsafe_allow_html=True
-)
-
-# 👣 版權
-st.caption("by 小比利出品 🍰")
+st.subheader(f"🎯 總熱量：約 **{total_calories:.2f} kcal**")
+st.caption("小比利出品 🍰")
