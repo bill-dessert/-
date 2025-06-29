@@ -77,6 +77,13 @@ for i in range(num_fields):
     if ingredient:
         total_calories += calorie_table[ingredient] * weight
 
+# 顯示明細放到總熱量前面
+st.markdown("---")
+st.subheader("📋 熱量明細")
+for item in details:
+    st.markdown(f"- {item}")
+
+
 # 顯示總熱量
 st.markdown("---")
 st.subheader(f"🍩 總熱量： 約 **{total_calories:.0f} kcal**")
