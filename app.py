@@ -46,7 +46,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-st.image("app_icon.jpg", width=160)
+st.image("app_icon.jpg", width=100)
 st.title("🍰 甜點熱量計算器")
 st.info("📱 用手機打開這頁後，點選右上角「⋯」或下方「分享」→ 選擇【加入主畫面】，就能像 App 一樣快速使用囉！")
 
