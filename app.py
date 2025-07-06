@@ -41,7 +41,7 @@ st.markdown("""
         color: white;
     }
     .stNumberInput input {
-        color: black;
+        color: white !important;
     }
     </style>
 """, unsafe_allow_html=True)
